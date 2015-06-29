@@ -30,9 +30,9 @@ function play(score, cards){
     var winning_moves = [];
     for (var i = 1; i < 5; i++){
     	if (cards[i] > 0){
-    		var winning_move = score + i == 22;
-    		win = win || winning_move;
-    		if (winning_move){
+    		var win_move = score + i == 22;
+    		win = win || win_move;
+    		if (win_move){
     			winning_moves.push(i);
     		}
     	}
@@ -44,10 +44,12 @@ function play(score, cards){
     	}
     }
     if (win){
+    	seen[key(cards)] = true;
     	moves[key(cards)] = winning_moves;
         return true;
     }
     if (loss){
+    	seen[key(cards)] = false;
         return false;
     }
 
@@ -81,11 +83,12 @@ function determine_ai(){
 
 var board = {};
 var ai_turn = true;
+var ai_on = true;
 var score = 0;
 
 function move_ai(){
 	var options = moves[key(board)];
-	// console.log(options);
+	console.log(options);
 	var choice = Math.floor(Math.random()*options.length);
 	var query = $('.clickable.c' + options[choice]);
 	var element = Math.floor(Math.random()*query.length);
@@ -102,6 +105,20 @@ function startGame(){
 
 	ai_turn = true;
 	move_ai();
+	// ai_on = false;
+	// ai_turn = false;
+	// $('.clickable.c1').first().click();
+	// $('.clickable.c1').first().click();
+	// $('.clickable.c1').first().click();
+	// $('.clickable.c2').first().click();
+	// $('.clickable.c2').first().click();
+	// $('.clickable.c2').first().click();
+	// $('.clickable.c2').first().click();
+	// $('.clickable.c3').first().click();
+	// $('.clickable.c4').first().click();
+	// ai_on = true;
+	// ai_turn = true;
+	// move_ai();
 }
 
 $('img').on('click', function (){
@@ -123,11 +140,13 @@ $('img').on('click', function (){
 		return startGame();
 	}
 	// console.log(board);
-	if (ai_turn){
-		ai_turn = false;
-	} else {
-		ai_turn = true;
-		move_ai();
+	if(ai_on){
+		if (ai_turn){
+			ai_turn = false;
+		} else {
+			ai_turn = true;
+			move_ai();
+		}
 	}
 });
 
