@@ -27,9 +27,14 @@ function play(score, cards){
 
     // base case
     var win = false;
+    var winning_moves = [];
     for (var i = 1; i < 5; i++){
     	if (cards[i] > 0){
-    		win = win || score + i == 22;
+    		var winning_move = score + i == 22;
+    		win = win || winning_move;
+    		if (winning_move){
+    			winning_moves.push(i);
+    		}
     	}
     }
     var loss = true;
@@ -39,6 +44,7 @@ function play(score, cards){
     	}
     }
     if (win){
+    	moves[key(cards)] = winning_moves;
         return true;
     }
     if (loss){
@@ -78,9 +84,12 @@ var ai_turn = true;
 var score = 0;
 
 function move_ai(){
-	options = moves[key(board)];
-	console.log(options);
-	$('.clickable.c' + options[0]).first().click();
+	var options = moves[key(board)];
+	// console.log(options);
+	var choice = Math.floor(Math.random()*options.length);
+	var query = $('.clickable.c' + options[choice]);
+	var element = Math.floor(Math.random()*query.length);
+	query.eq(element).click();
 }
 
 function startGame(){
