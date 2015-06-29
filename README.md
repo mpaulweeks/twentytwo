@@ -2,6 +2,8 @@
 
 http://mpaulweeks.github.io/twentytwo/
 
+AI designed with https://github.com/matthew-piziak
+
 Puzzle game
 
 todo:
