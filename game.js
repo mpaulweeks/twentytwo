@@ -96,8 +96,9 @@ function move_ai(){
 }
 
 function startGame(){
-	$('img').show();
+	gameOver = false;
 	$('img').addClass('clickable');
+	$('img').css({position: 'float', left: 0});
 	for (var i = 1; i < 5; i++){
 		board[i] = 4;
 	}
@@ -121,13 +122,30 @@ function startGame(){
 	// move_ai();
 }
 
+function move(div){
+	gap = 100
+	distance = gap - div.offset().left;
+	if(ai_turn){
+		distance = $(window).width() - gap - div.offset().left - div.width();
+	}
+	distance += Math.floor(Math.random()*gap) - gap/2;
+	delta = "+=" + distance;
+	div.css({position: 'relative'});
+	div.animate({left: delta}, 950);
+}
+
 $('img').on('click', function (){
+	if (gameOver){
+		return;
+	}
+
 	if (!$(this).hasClass('clickable')){
 		return;
 	}
 
 	$(this).removeClass('clickable');
-	$(this).hide();
+	move($(this));
+
 	var className = $(this).attr('class');
 	var value = parseInt(className.charAt(1));
 	board[value] -= 1;
@@ -136,8 +154,11 @@ $('img').on('click', function (){
 	if (score > 21){
 		var win = score == 22;
 		var you_win = (win && !ai_turn) || (!win && ai_turn);
-		alert('you win = ' + you_win);
-		return startGame();
+		gameOver = true;
+		setTimeout(function(){
+			alert('you win = ' + you_win);
+			return startGame();
+		}, 1000);
 	}
 	// console.log(board);
 	if(ai_on){
@@ -145,7 +166,7 @@ $('img').on('click', function (){
 			ai_turn = false;
 		} else {
 			ai_turn = true;
-			move_ai();
+			setTimeout(move_ai, 400);
 		}
 	}
 });
