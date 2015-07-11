@@ -25,6 +25,14 @@ function play(score, cards){
         return seen[key(cards)];
     }
 
+    // catch a game end due to simulated move
+    if (score == 22){
+    	return false;
+    }
+    if (score > 22){
+    	return true;
+    }
+
     // base case
     var win = false;
     var winning_moves = [];
@@ -58,9 +66,9 @@ function play(score, cards){
     var all_true = true;
     for (var i = 1; i < 5; i++){
         if (cards[i] > 0){
-            new_cards = new_(cards);
+            var new_cards = new_(cards);
             new_cards[i] -= 1;
-            opponent_result = play(score + i, new_cards);
+            var opponent_result = play(score + i, new_cards);
             all_true = all_true && opponent_result;
             if (!opponent_result){
             	good_moves.push(i);
@@ -88,7 +96,7 @@ var score = 0;
 
 function move_ai(){
 	var options = moves[key(board)];
-	console.log(options);
+	console.log(key(board), options);
 	var choice = Math.floor(Math.random()*options.length);
 	var query = $('.clickable.c' + options[choice]);
 	var element = Math.floor(Math.random()*query.length);
@@ -116,7 +124,7 @@ function startGame(){
 	// $('.clickable.c2').first().click();
 	// $('.clickable.c2').first().click();
 	// $('.clickable.c3').first().click();
-	// $('.clickable.c4').first().click();
+	// $('.clickable.c3').first().click();
 	// ai_on = true;
 	// ai_turn = true;
 	// move_ai();
