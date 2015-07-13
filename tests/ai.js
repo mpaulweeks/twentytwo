@@ -1,13 +1,7 @@
 
-run_tests = run_tests || function(){console.log('done');}
 
-old_tests = run_tests;
-run_tests = function(){
-	test_ai();
-	old_tests();
-}
-
-function test_ai(){
+add_test(function(){
 	var ai_brain = ai_factory(); //inherited
-	
-}
+
+	print('ai smoke tested');
+})

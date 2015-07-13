@@ -4,6 +4,20 @@
     <head>
         <title>twenty two tests</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+        <script type="text/javascript">
+        	var print = function(message){
+        		$('body').append(message + '<br/><br/>');
+        	}
+    		var run_tests = function(){print('done');}
+    		var add_test = function(test_func){
+				var old_tests = run_tests;
+				run_tests = function(){
+					test_func();
+					old_tests();
+				};
+    		}
+        </script>
         <script src="../ai.js"></script>
         <script src="ai.js"></script>
         
