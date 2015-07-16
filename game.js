@@ -21,6 +21,7 @@ function startGame(){
 		board[i] = 4;
 	}
 	score = 0;
+	print_score();
 
 	ai_turn = true;
 	move_ai();
@@ -52,6 +53,10 @@ function move(div){
 	div.animate({left: delta}, 950);
 }
 
+function print_score(){
+	$('#score').html(score);
+}
+
 $('img').on('click', function (){
 	if (gameOver){
 		return;
@@ -68,7 +73,7 @@ $('img').on('click', function (){
 	var value = parseInt(className.charAt(1));
 	board[value] -= 1;
 	score += value;
-	$('#message').html(score);
+	print_score();
 	if (score > 21){
 		var win = score == 22;
 		var you_win = (win && !ai_turn) || (!win && ai_turn);
