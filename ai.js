@@ -1,11 +1,22 @@
 PERFECT = 'hard';
-HUMAN = 'medium';
+FORGETFUL = 'FORGETFUL';
+EVOLVING = 'EVOLVING';
 RANDOM = 'very easy';
 
 function ai_factory(){
 
 	var seen = {};
 	var moves = {};
+
+	var is_forgetting = false;
+
+	function get_score(board){
+		var sum = 40;
+		for(var i = 1; i < 5; i++){
+			sum -= i*board[i];
+		}
+		return sum;
+	}
 
 	function key(cards){
 		var str_rep = "";
@@ -86,6 +97,9 @@ function ai_factory(){
 	}
 
 	function random(options){
+		if (0 == options.length){
+			return null;
+		}
 		return options[Math.floor(Math.random()*options.length)];
 	}
 
@@ -97,17 +111,29 @@ function ai_factory(){
 				possible_moves.push(i);
 			}
 		}
-		var choice = possible_moves[0];
+		var options = [];
+		var choice = null;
 
-		if (difficulty == PERFECT){
-			var options = moves[key(board)];
-			console.log(key(board), options);
-			choice = random(options);
-		} else if (difficulty == RANDOM){
-			choice = random(possible_moves);
+		if (difficulty == EVOLVING && get_score(board) > 11){
+			difficulty = PERFECT;
 		}
 
-		return choice;
+		if (difficulty == FORGETFUL){
+			is_forgetting = !is_forgetting;
+			if (!is_forgetting){
+				difficulty = PERFECT;
+			}
+		}
+
+		if (difficulty == PERFECT){
+			options = moves[key(board)];
+		}
+
+		if (difficulty == RANDOM){
+			// do nothing
+		}
+
+		return choice || random(options) || random(possible_moves);
 	}
 
 	function build_tree(){
