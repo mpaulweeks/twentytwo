@@ -4,6 +4,7 @@ var board = {};
 var ai_turn = true;
 var ai_on = true;
 var score = 0;
+var player_number = 0;
 var ai_brain = ai_factory(); //inherited from ai.js
 
 function move_ai(){
@@ -25,20 +26,6 @@ function startGame(){
 
 	ai_turn = true;
 	move_ai();
-	// ai_on = false;
-	// ai_turn = false;
-	// $('.clickable.c1').first().click();
-	// $('.clickable.c1').first().click();
-	// $('.clickable.c1').first().click();
-	// $('.clickable.c2').first().click();
-	// $('.clickable.c2').first().click();
-	// $('.clickable.c2').first().click();
-	// $('.clickable.c2').first().click();
-	// $('.clickable.c3').first().click();
-	// $('.clickable.c3').first().click();
-	// ai_on = true;
-	// ai_turn = true;
-	// move_ai();
 }
 
 function move(div){
@@ -55,6 +42,23 @@ function move(div){
 
 function print_score(){
 	$('#score').html(score);
+}
+
+function print_player(){
+	if(gameOver){
+		return;
+	}
+	var message = "";
+	if(ai_on){
+		if(ai_turn){
+			message = "AI";
+		} else {
+			message = "Human";
+		}
+	} else {
+		message = "Player " + player_number;
+	}
+	$('#player_message').html(message);
 }
 
 $('img').on('click', function (){
@@ -83,15 +87,18 @@ $('img').on('click', function (){
 			return startGame();
 		}, 1000);
 	}
-	// console.log(board);
 	if(ai_on){
 		if (ai_turn){
 			ai_turn = false;
+
 		} else {
 			ai_turn = true;
 			setTimeout(move_ai, 400);
 		}
 	}
+
+	player_number = 1 - player_number;
+	print_player();
 });
 
 $('#reset').on('click', startGame);
