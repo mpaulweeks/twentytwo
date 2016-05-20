@@ -1,13 +1,20 @@
+
+body {
+    background-color: #eeeeee;
+    font-family: "Cambria", Helvetica, Arial, sans-serif;
+    text-align: center;
+}
+
 .card {
     float: left;
     cursor: pointer;
     margin: 5px;
     width: 80px;
     height: 100px;
-    background-color: white;
+    background-color: inherit;
 }
 
-.row {
+.holder {
 	width: 360px;
 	margin: 0px auto;
 }
@@ -16,6 +23,7 @@
     clear: both;
 }
 
-body {
-	text-align: center;
+.score {
+    padding: 5px;
+    border: solid black 2px;
 }

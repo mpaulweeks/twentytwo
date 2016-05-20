@@ -1,63 +1,67 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <title>twenty two</title>
-        <link href='http://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" type="text/css" href="game.css" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-        <script src="ai.js"></script>
-        <script src="game.js"></script>
-        
-    </head>
+<head>
+    <title>twenty two</title>
+    <link rel="shortcut icon" href="img/12.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
 
-    <body>
+    <link rel="stylesheet" type="text/css" href="game.css" />
+    <script src="ai.js"></script>
+    <script src="game.js"></script>
+</head>
+<body>
+    <div class="container">
         <h1>
             twenty two
         </h1>
 
-        <h3 id="score"></h3>
+        <p> take away cards to add to the combined score </p>
+        <p> if you make 22, you win. if you go above, you lose </p>
 
-        <div id="board">
+        <h3>
+            <span> Score: <span class="score" id="score"></span></span>
+        </h3>
 
-            <div class="row">
-                <div class="card"><img class="c1" src='img/12.png'></div></div>
-                <div class="card"><img class="c2" src='img/22.png'></div></div>
-                <div class="card"><img class="c3" src='img/32.png'></div></div>
-                <div class="card"><img class="c4" src='img/42.png'></div></div>
-            </div>
-            <div class="row float-clear">
-                <div class="card"><img class="c1" src='img/14.png'></div></div>
-                <div class="card"><img class="c2" src='img/24.png'></div></div>
-                <div class="card"><img class="c3" src='img/34.png'></div></div>
-                <div class="card"><img class="c4" src='img/44.png'></div></div>
-            </div>
-            <div class="row float-clear">
-                <div class="card"><img class="c1" src='img/11.png'></div></div>
-                <div class="card"><img class="c2" src='img/21.png'></div></div>
-                <div class="card"><img class="c3" src='img/31.png'></div></div>
-                <div class="card"><img class="c4" src='img/41.png'></div></div>
-            </div>
-            <div class="row float-clear">
-                <div class="card"><img class="c1" src='img/13.png'></div></div>
-                <div class="card"><img class="c2" src='img/23.png'></div></div>
-                <div class="card"><img class="c3" src='img/33.png'></div></div>
-                <div class="card"><img class="c4" src='img/43.png'></div></div>
-            </div>
-
+        <div class="holder center-block">
+            <div class="card"><img class="c1" src='img/12.png'></div>
+            <div class="card"><img class="c2" src='img/22.png'></div>
+            <div class="card"><img class="c3" src='img/32.png'></div>
+            <div class="card"><img class="c4" src='img/42.png'></div>
             <div class="float-clear"></div>
-
+        </div>
+        <div class="holder center-block">
+            <div class="card"><img class="c1" src='img/14.png'></div>
+            <div class="card"><img class="c2" src='img/24.png'></div>
+            <div class="card"><img class="c3" src='img/34.png'></div>
+            <div class="card"><img class="c4" src='img/44.png'></div>
+            <div class="float-clear"></div>
+        </div>
+        <div class="holder center-block">
+            <div class="card"><img class="c1" src='img/11.png'></div>
+            <div class="card"><img class="c2" src='img/21.png'></div>
+            <div class="card"><img class="c3" src='img/31.png'></div>
+            <div class="card"><img class="c4" src='img/41.png'></div>
+            <div class="float-clear"></div>
+        </div>
+        <div class="holder center-block">
+            <div class="card"><img class="c1" src='img/13.png'></div>
+            <div class="card"><img class="c2" src='img/23.png'></div>
+            <div class="card"><img class="c3" src='img/33.png'></div>
+            <div class="card"><img class="c4" src='img/43.png'></div>
+            <div class="float-clear"></div>
         </div>
 
         <button id='reset'>
-            Reset
+            RESET
         </button>
-
-
-        <script type="text/javascript">
-            $(document).ready(function () {
-                game();
-            });
-        </script>
-    </body>
+    </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        game();
+    });
+</script>
+</body>
 </html>
