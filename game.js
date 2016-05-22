@@ -1,9 +1,31 @@
 function game(){
 
+read_url_param = function(param_name, as_list){
+    as_list = as_list || false;
+    var vars = {};
+    var q = document.URL.split('?')[1];
+    if(q != undefined){
+        q = q.split('&');
+        for(var i = 0; i < q.length; i++){
+            var param = q[i].split('=');
+            var name = param[0];
+            var value = param[1];
+            vars[name] = vars[name] || [];
+            vars[name].push(value);
+        }
+    }
+    if (vars.hasOwnProperty(param_name)){
+        if (vars[param_name].length == 1 && !as_list){
+            return vars[param_name][0];
+        }
+        return vars[param_name];
+    }
+    return null;
+};
+
 var board = {};
 var ai_turn = true;
 var ai_on = false;
-// var ai_on = true;
 var score = 0;
 var player_number = 0;
 var ai_brain = ai_factory(); //inherited from ai.js
@@ -19,6 +41,8 @@ function move_ai(){
 }
 
 function startGame(){
+	ai_on = Boolean(read_url_param('ai'))
+
 	gameOver = false;
 	$('img').addClass('clickable');
 	$('img').css({position: 'float', left: 0});
@@ -100,10 +124,8 @@ $('img').on('click', function (){
 	score += value;
 	if (score > 21){
 		var win = score == 22;
-		var you_win = (!ai_on && win) || (ai_on && ((win && !ai_turn) || (!win && ai_turn)));
-		console.log('you win = ' + you_win);
 		var player_name = get_current_player_name();
-		if (!you_win){
+		if (!win){
 			player_name = get_opponent_player_name();
 		}
 		var message = player_name + ' wins!'
@@ -113,7 +135,7 @@ $('img').on('click', function (){
 			$('.overlay').show();
 		}, 1000);
 	}
-	if(ai_on){
+	else if(ai_on){
 		if (ai_turn){
 			ai_turn = false;
 
