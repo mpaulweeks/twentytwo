@@ -2,12 +2,16 @@ function game(){
 
 var board = {};
 var ai_turn = true;
-var ai_on = true;
+var ai_on = false;
+// var ai_on = true;
 var score = 0;
 var player_number = 0;
 var ai_brain = ai_factory(); //inherited from ai.js
 
 function move_ai(){
+	if (!ai_on){
+		return;
+	}
 	var choice = ai_brain.get_move(board);
 	var query = $('.clickable.c' + choice);
 	var element = Math.floor(Math.random()*query.length);
@@ -42,23 +46,39 @@ function move(div){
 
 function print_score(){
 	$('#score').html(score);
+	print_player();
 }
 
 function print_player(){
 	if(gameOver){
 		return;
 	}
-	var message = "";
+	var message = get_current_player_name();
+	$('#player_message').html(message);
+}
+
+function get_current_player_name(){
 	if(ai_on){
 		if(ai_turn){
-			message = "AI";
+			return "AI";
 		} else {
-			message = "Human";
+			return "Human";
 		}
 	} else {
-		message = "Player " + player_number;
+		return "Player " + (player_number + 1);
 	}
-	$('#player_message').html(message);
+}
+
+function get_opponent_player_name(){
+	if(ai_on){
+		if(ai_turn){
+			return "Human";
+		} else {
+			return "AI";
+		}
+	} else {
+		return "Player " + (2 - player_number);
+	}
 }
 
 $('img').on('click', function (){
@@ -77,13 +97,18 @@ $('img').on('click', function (){
 	var value = parseInt(className.charAt(1));
 	board[value] -= 1;
 	score += value;
-	print_score();
 	if (score > 21){
 		var win = score == 22;
-		var you_win = (win && !ai_turn) || (!win && ai_turn);
+		var you_win = (!ai_on && win) || (ai_on && ((win && !ai_turn) || (!win && ai_turn)));
+		console.log('you win = ' + you_win);
+		var player_name = get_current_player_name();
+		if (!you_win){
+			player_name = get_opponent_player_name();
+		}
+		var message = player_name + ' wins!'
 		gameOver = true;
 		setTimeout(function(){
-			alert('you win = ' + you_win);
+			alert(message);
 			return startGame();
 		}, 1000);
 	}
@@ -96,9 +121,8 @@ $('img').on('click', function (){
 			setTimeout(move_ai, 400);
 		}
 	}
-
 	player_number = 1 - player_number;
-	print_player();
+	print_score();
 });
 
 $('#reset').on('click', startGame);
