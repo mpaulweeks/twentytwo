@@ -27,6 +27,7 @@ function startGame(){
 	}
 	score = 0;
 	print_score();
+	$('.overlay').hide();
 
 	ai_turn = true;
 	move_ai();
@@ -108,8 +109,8 @@ $('img').on('click', function (){
 		var message = player_name + ' wins!'
 		gameOver = true;
 		setTimeout(function(){
-			alert(message);
-			return startGame();
+			$('#victory').html(message);
+			$('.overlay').show();
 		}, 1000);
 	}
 	if(ai_on){
