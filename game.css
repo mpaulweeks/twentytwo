@@ -27,6 +27,7 @@ body {
 }
 
 .overlay {
+    z-index: 1;
     position: absolute;
     top: 40%;
     left: 35%;
