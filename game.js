@@ -41,7 +41,7 @@ function move_ai(){
 }
 
 function startGame(){
-	ai_on = Boolean(read_url_param('ai'))
+	ai_on = Boolean(read_url_param('ai'));
 
 	gameOver = false;
 	$('img').addClass('clickable');
