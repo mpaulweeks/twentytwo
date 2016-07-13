@@ -57,16 +57,10 @@ function startGame(){
 	move_ai();
 }
 
-function move(div){
-	gap = 100
-	distance = gap - div.offset().left;
-	if(ai_turn){
-		distance = $(window).width() - gap - div.offset().left - div.width();
-	}
-	distance += Math.floor(Math.random()*gap) - gap/2;
-	delta = "+=" + distance;
-	div.css({position: 'relative'});
-	div.animate({left: delta}, 950);
+function remove_card($div){
+	$div.removeClass('clickable');
+	$div.fadeTo(0, 0.8);
+	$div.fadeTo(500, 0.1);
 }
 
 function print_score(){
@@ -107,16 +101,16 @@ function get_opponent_player_name(){
 }
 
 $('img').on('click', function (){
+	var $this = $(this);
 	if (gameOver){
 		return;
 	}
 
-	if (!$(this).hasClass('clickable')){
+	if (!$this.hasClass('clickable')){
 		return;
 	}
 
-	$(this).removeClass('clickable');
-	move($(this));
+	remove_card($this);
 
 	var className = $(this).attr('class');
 	var value = parseInt(className.charAt(1));
