@@ -45,7 +45,7 @@ function startGame(){
 
 	gameOver = false;
 	$('img').addClass('clickable');
-	$('img').css({position: 'float', left: 0});
+	$('.clickable').fadeTo(0, 1.0);
 	for (var i = 1; i < 5; i++){
 		board[i] = 4;
 	}
